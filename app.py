@@ -1,16 +1,7 @@
 import os
-import logging
-import warnings
-
-# Suppress all TF/Keras warnings — must happen before importing tensorflow
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-warnings.filterwarnings('ignore')
-logging.getLogger('tensorflow').setLevel(logging.ERROR)
-logging.getLogger('absl').setLevel(logging.ERROR)
 
 import streamlit as st
-import tensorflow as tf
+import onnxruntime as ort
 import numpy as np
 from PIL import Image, ImageOps
 import json
@@ -23,16 +14,10 @@ st.set_page_config(
     layout="centered"
 )
 
-# Load model — compile after loading to silence compile_metrics warning
+# Load ONNX model session
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model("mnist_model.h5")
-    model.compile(
-        optimizer='adam',
-        loss='sparse_categorical_crossentropy',
-        metrics=['accuracy']
-    )
-    return model
+    return ort.InferenceSession("mnist_model.onnx")
 
 model = load_model()
 
@@ -102,7 +87,8 @@ with tab1:
 
         with col2:
             # Predict
-            predictions = model.predict(img_array)
+            input_name = model.get_inputs()[0].name
+            predictions = model.run(None, {input_name: img_array.astype("float32")})[0]
             predicted_digit = np.argmax(predictions)
             confidence = float(np.max(predictions)) * 100
 
