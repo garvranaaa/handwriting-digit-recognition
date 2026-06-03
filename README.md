@@ -1,4 +1,3 @@
-```markdown
 # Handwriting Digit Recognition
 
 ### [🚀 Live Demo](https://handwriting-digit-recognition.streamlit.app/)
@@ -84,4 +83,3 @@ python train_model.py
 ---
 
 Garv Rana · EE Undergrad · [DTU](https://dtu.ac.in) · [GitHub](https://github.com/garvranaaa) · [LinkedIn](https://linkedin.com/in/garvsanjeevrana)
-```
