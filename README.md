@@ -16,6 +16,8 @@ A CNN trained on MNIST that classifies handwritten digits (0–9) from uploaded 
 
 Upload a photo of a handwritten digit → the model preprocesses it (auto-crop, threshold, center) to match MNIST format → predicts the digit with a confidence score and full probability distribution.
 
+The app uses an ONNX model for inference, so deployment is simpler and does not require TensorFlow at runtime.
+
 ---
 
 ## Model
