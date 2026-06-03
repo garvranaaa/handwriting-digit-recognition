@@ -1,6 +1,6 @@
 # Handwriting Digit Recognition
 
-A CNN trained on MNIST that classifies handwritten digits (0–9) from uploaded photos. Built with TensorFlow, deployed as a Streamlit web app.
+A CNN trained on MNIST that classifies handwritten digits (0–9) from uploaded photos. Training is done with TensorFlow/Keras, and inference is deployed with ONNX Runtime in a Streamlit web app.
 
 **Test set accuracy: 99.19%**
 
@@ -55,15 +55,22 @@ python -m venv .venv
 source .venv/bin/activate          # Mac/Linux
 
 pip install -r requirements.txt
-python train_model.py              # run once to generate model
 streamlit run app.py
+```
+
+The app uses the included `mnist_model.onnx` file for inference. If you want to retrain the model or regenerate weights, run:
+
+```bash
+python train_model.py
 ```
 
 ---
 
 ## Stack
 
-TensorFlow · Keras · Streamlit · NumPy · Pillow · Matplotlib
+Training: TensorFlow · Keras
+
+Deployment: ONNX Runtime · Streamlit · NumPy · Pillow · Matplotlib
 
 ---
 
