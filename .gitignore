@@ -2,4 +2,3 @@ __pycache__/
 .venv/
 *.h5
 *.pyc
-training_curves.png

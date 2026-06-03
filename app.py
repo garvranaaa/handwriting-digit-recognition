@@ -109,9 +109,9 @@ with tab1:
             st.metric("Predicted Digit", str(predicted_digit))
             st.metric("Confidence", f"{confidence:.1f}%")
 
-            if confidence > 90:
+            if confidence > 85:
                 st.success("High confidence prediction ✅")
-            elif confidence > 70:
+            elif confidence > 60:
                 st.warning("Moderate confidence — try a clearer image")
             else:
                 st.error("Low confidence — model is uncertain")

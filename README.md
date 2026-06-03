@@ -1,54 +1,70 @@
-# Handwritten Digit Recognition
+# Handwriting Digit Recognition
 
-A Streamlit-based MNIST digit recognition app with separate training and deployment files.
+A CNN trained on MNIST that classifies handwritten digits (0–9) from uploaded photos. Built with TensorFlow, deployed as a Streamlit web app.
 
-## Project structure
+**Test set accuracy: 99.19%**
 
-- `train_model.py` — trains the MNIST model with data augmentation, dropout, and 15 epochs, then saves:
-  - `mnist_model.h5`
-  - `training_history.json`
-  - `training_curves.png`
-- `app.py` — Streamlit app that loads the saved model and predicts handwritten digit uploads.
-- `requirements.txt` — dependencies for training and running the app.
-
-## Features
-
-- 15-epoch convolutional model with data augmentation
-- Dropout layers to reduce overfitting
-- Saves a pre-trained model for instant Streamlit serving
-- Upload any handwritten digit image and see:
-  - predicted digit
-  - confidence bar chart
-  - top prediction probabilities
-- Training accuracy/loss curves shown in the UI
-
-## Run instructions
-
-```bash
-pip install -r requirements.txt
-python train_model.py
-streamlit run app.py
-```
-
-## Output files
-
-- `mnist_model.h5`: saved trained model
-- `training_history.json`: epoch-by-epoch metrics
-- `training_curves.png`: training curves image
+---
 
 ## Demo
 
-![Streamlit App Demo](app_demo.png)
+![App Demo](app_demo.png)
 
-### Training curves
+---
+
+## How it works
+
+Upload a photo of a handwritten digit → the model preprocesses it (auto-crop, threshold, center) to match MNIST format → predicts the digit with a confidence score and full probability distribution.
+
+---
+
+## Model
+
+```
+Input (28×28×1)
+→ Conv2D(32)  → MaxPool → Dropout(0.25)
+→ Conv2D(64)  → MaxPool → Dropout(0.25)  
+→ Conv2D(128)           → Dropout(0.25)
+→ Dense(256)            → Dropout(0.5)
+→ Dense(10, softmax)
+```
+
+Trained for 15 epochs with data augmentation (rotation, zoom, shift).
+
+---
+
+## Training curves
 
 ![Training Curves](training_curves.png)
 
-## Result
+| | Train | Validation |
+|---|---|---|
+| Accuracy | 97.05% | **99.19%** |
+| Loss | 0.0967 | 0.0196 |
 
-The upgraded training workflow achieved a test accuracy of **99.19%**.
+---
 
-## Notes
+## Run locally
 
-- The app uses image upload rather than a canvas widget for better compatibility across deployment targets.
-- If you want to update the demo screenshot later, replace `app_demo.png` with a real Streamlit screenshot.
+```bash
+git clone https://github.com/garvranaaa/handwriting-digit-recognition
+cd handwriting-digit-recognition
+
+python -m venv .venv
+.venv\Scripts\Activate.ps1        # Windows
+source .venv/bin/activate          # Mac/Linux
+
+pip install -r requirements.txt
+python train_model.py              # run once to generate model
+streamlit run app.py
+```
+
+---
+
+## Stack
+
+TensorFlow · Keras · Streamlit · NumPy · Pillow · Matplotlib
+
+---
+
+Garv Rana · EE Undergrad · [DTU](https://dtu.ac.in) · [GitHub](https://github.com/garvranaaa) · [LinkedIn](https://linkedin.com/in/garvsanjeevrana)
